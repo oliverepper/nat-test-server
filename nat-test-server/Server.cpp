@@ -109,7 +109,7 @@ void Server::run_event_loop() {
                 auto iter = find_if(m_clients.begin(), m_clients.end(), [fd](const Client& c) -> bool {
                     return c.has_fd(fd);
                 });
-                m_clients.erase(iter, m_clients.end());
+                m_clients.erase(iter);
                 EV_SET(&event_set, fd, EVFILT_READ, EV_DELETE, 0, 0, NULL);
                 kevent(m_kq, &event_set, 1, NULL, 0, NULL);
                 std::cout << "Client removed" << std::endl;
